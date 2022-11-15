@@ -4,6 +4,8 @@
  */
 package View;
 
+import Repository.AccountRepository;
+import Service.EmailSender;
 import Utilities.DBcontext;
 import Utilities.SQLServerConnection;
 import java.awt.Color;
@@ -16,12 +18,14 @@ import javax.swing.JOptionPane;
  *
  * @author Huy PC
  */
-public class FormLogin extends javax.swing.JFrame {
+public class FormQuenPass extends javax.swing.JFrame {
 
     /**
      * Creates new form FormLogin
      */
-    public FormLogin() {
+    EmailSender email=new EmailSender();
+    AccountRepository acc=new AccountRepository();
+    public FormQuenPass() {
         initComponents();
 
     }
@@ -41,10 +45,10 @@ public class FormLogin extends javax.swing.JFrame {
         LoginPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        txtUsername = new javax.swing.JTextField();
-        txtPass = new javax.swing.JTextField();
         btndangnhap = new javax.swing.JButton();
         btnquenpass = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        txtUsername = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1920, 1080));
@@ -74,8 +78,8 @@ public class FormLogin extends javax.swing.JFrame {
             pannelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pannelHeaderLayout.createSequentialGroup()
                 .addGap(844, 844, 844)
-                .addComponent(titleHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(771, Short.MAX_VALUE))
+                .addComponent(titleHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(757, Short.MAX_VALUE))
         );
         pannelHeaderLayout.setVerticalGroup(
             pannelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -92,7 +96,7 @@ public class FormLogin extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(38, 50, 56));
-        jLabel1.setText("Vui lòng nhập tài khoản của bạn");
+        jLabel1.setText("Vui lòng nhập tài khoản (Email) của bạn ");
         jLabel1.setMaximumSize(new java.awt.Dimension(378, 28));
         jLabel1.setMinimumSize(new java.awt.Dimension(378, 28));
         jLabel1.setName(""); // NOI18N
@@ -107,37 +111,12 @@ public class FormLogin extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 423, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 1, Short.MAX_VALUE)
         );
-
-        txtUsername.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
-        txtUsername.setForeground(new java.awt.Color(84, 110, 122));
-        txtUsername.setText("  Tên tài khoản (Email)");
-        txtUsername.setToolTipText("");
-        txtUsername.setMaximumSize(new java.awt.Dimension(423, 56));
-        txtUsername.setMinimumSize(new java.awt.Dimension(423, 56));
-        txtUsername.setPreferredSize(new java.awt.Dimension(423, 56));
-        txtUsername.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                txtUsernameMouseClicked(evt);
-            }
-        });
-
-        txtPass.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
-        txtPass.setForeground(new java.awt.Color(84, 110, 122));
-        txtPass.setText("  Mật khẩu");
-        txtPass.setMaximumSize(new java.awt.Dimension(423, 56));
-        txtPass.setMinimumSize(new java.awt.Dimension(423, 56));
-        txtPass.setPreferredSize(new java.awt.Dimension(423, 56));
-        txtPass.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                txtPassMouseClicked(evt);
-            }
-        });
 
         btndangnhap.setBackground(new java.awt.Color(242, 157, 56));
         btndangnhap.setFont(new java.awt.Font("Roboto", 0, 15)); // NOI18N
@@ -155,10 +134,31 @@ public class FormLogin extends javax.swing.JFrame {
 
         btnquenpass.setBackground(new java.awt.Color(242, 157, 56));
         btnquenpass.setForeground(new java.awt.Color(255, 255, 255));
-        btnquenpass.setText("Quên password");
+        btnquenpass.setText("seed email(cập nhật lại mật khẩu)");
         btnquenpass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnquenpassActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(38, 50, 56));
+        jLabel2.setText("sẽ có mật khẩu mới gửi đến mail của bạn");
+        jLabel2.setMaximumSize(new java.awt.Dimension(378, 28));
+        jLabel2.setMinimumSize(new java.awt.Dimension(378, 28));
+        jLabel2.setName(""); // NOI18N
+        jLabel2.setPreferredSize(new java.awt.Dimension(378, 28));
+
+        txtUsername.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
+        txtUsername.setForeground(new java.awt.Color(84, 110, 122));
+        txtUsername.setText("  Tên tài khoản (Email)");
+        txtUsername.setToolTipText("");
+        txtUsername.setMaximumSize(new java.awt.Dimension(423, 56));
+        txtUsername.setMinimumSize(new java.awt.Dimension(423, 56));
+        txtUsername.setPreferredSize(new java.awt.Dimension(423, 56));
+        txtUsername.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtUsernameMouseClicked(evt);
             }
         });
 
@@ -167,37 +167,39 @@ public class FormLogin extends javax.swing.JFrame {
         LoginPanelLayout.setHorizontalGroup(
             LoginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(LoginPanelLayout.createSequentialGroup()
+                .addGap(32, 32, 32)
                 .addGroup(LoginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(LoginPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btnquenpass, javax.swing.GroupLayout.PREFERRED_SIZE, 423, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, LoginPanelLayout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addGroup(LoginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btndangnhap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(LoginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtUsername, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtPass, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                .addContainerGap(25, Short.MAX_VALUE))
+                    .addComponent(btndangnhap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(LoginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(LoginPanelLayout.createSequentialGroup()
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 449, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(LoginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(btnquenpass, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtUsername, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(0, Short.MAX_VALUE))
         );
         LoginPanelLayout.setVerticalGroup(
             LoginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(LoginPanelLayout.createSequentialGroup()
-                .addGap(48, 48, 48)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addGap(20, 20, 20)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(LoginPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(LoginPanelLayout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(LoginPanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(28, 28, 28)
                 .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
-                .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(56, 56, 56)
-                .addComponent(btndangnhap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(60, 60, 60)
                 .addComponent(btnquenpass, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addGap(43, 43, 43)
+                .addComponent(btndangnhap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(89, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layoutChinhLayout = new javax.swing.GroupLayout(layoutChinh);
@@ -207,29 +209,32 @@ public class FormLogin extends javax.swing.JFrame {
             .addGroup(layoutChinhLayout.createSequentialGroup()
                 .addComponent(pannelHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layoutChinhLayout.createSequentialGroup()
-                .addGap(720, 720, 720)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layoutChinhLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(LoginPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(706, 706, 706))
         );
         layoutChinhLayout.setVerticalGroup(
             layoutChinhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layoutChinhLayout.createSequentialGroup()
                 .addComponent(pannelHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(209, 209, 209)
+                .addGap(100, 100, 100)
                 .addComponent(LoginPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 337, Short.MAX_VALUE))
+                .addGap(0, 458, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(layoutChinh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(54, 54, 54)
+                .addComponent(layoutChinh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(layoutChinh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(layoutChinh, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1092, Short.MAX_VALUE)
         );
 
         pack();
@@ -240,52 +245,37 @@ public class FormLogin extends javax.swing.JFrame {
         if (txtUsername.getForeground().equals(Color.decode("#546E7A"))) {
             txtUsername.setText("");
             txtUsername.setForeground(Color.BLACK);
-            if (txtPass.getText().isEmpty()) {
-                txtPass.setForeground(Color.decode("#546E7A"));
-                txtPass.setText("  Mật khẩu");
-            }
+            
         }
     }//GEN-LAST:event_txtUsernameMouseClicked
 
-    private void txtPassMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtPassMouseClicked
-        // TODO add your handling code here:
-        if (txtPass.getForeground().equals(Color.decode("#546E7A"))) {
-            txtPass.setText("");
-            txtPass.setForeground(Color.BLACK);
-            if (txtUsername.getText().isEmpty()) {
-                txtUsername.setForeground(Color.decode("#546E7A"));
-                txtUsername.setText("  Tên tài khoản (Email)");
-            }
-        }
-    }//GEN-LAST:event_txtPassMouseClicked
-
     private void btndangnhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndangnhapActionPerformed
         // TODO add your handling code here:
-        String query = "select * from nhanvien where taikhoan=? and matkhau=?";
+        
+    }//GEN-LAST:event_btndangnhapActionPerformed
+
+    private void btnquenpassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnquenpassActionPerformed
+        // TODO add your handling code here:
+        String query = "select * from nhanvien where taikhoan=?";
+        String tk=txtUsername.getText();
         int check = 0;
         try ( Connection con = DBcontext.getConnection();  PreparedStatement ps = con.prepareStatement(query)) {
             ps.setString(1, txtUsername.getText().toString().toLowerCase());
-            ps.setObject(2, txtPass.getText());
             ResultSet rs = ps.executeQuery();
-            if (txtUsername.getText().trim().isEmpty() || txtPass.getText().trim().isEmpty()) {
+            if (txtUsername.getText().trim().isEmpty()) {
                 rs.close();
                 JOptionPane.showMessageDialog(rootPane, "cần nhập tk và mk");
             } else if (rs.next()) {
                 rs.close();
-                JOptionPane.showMessageDialog(rootPane, "đăng nhập thành công");
-                FormDSOrder ds=new FormDSOrder();
-                ds.setVisible(true);
-                this.dispose();
+                JOptionPane.showMessageDialog(rootPane, "seen email thành công");
+                email.sendemail(tk);
+                acc.updatepass(tk);
             } else {
                 rs.close();
                 JOptionPane.showMessageDialog(rootPane, "đăng nhập không thành công");
             }
         } catch (Exception e) {
         }
-    }//GEN-LAST:event_btndangnhapActionPerformed
-
-    private void btnquenpassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnquenpassActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_btnquenpassActionPerformed
 
     /**
@@ -305,20 +295,21 @@ public class FormLogin extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormQuenPass.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormQuenPass.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormQuenPass.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormQuenPass.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FormLogin().setVisible(true);
+                new FormQuenPass().setVisible(true);
             }
         });
     }
@@ -328,11 +319,11 @@ public class FormLogin extends javax.swing.JFrame {
     private javax.swing.JButton btndangnhap;
     private javax.swing.JButton btnquenpass;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel layoutChinh;
     private javax.swing.JPanel pannelHeader;
     private javax.swing.JLabel titleHeader;
-    private javax.swing.JTextField txtPass;
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 }

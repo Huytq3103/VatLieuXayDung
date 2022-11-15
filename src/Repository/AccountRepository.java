@@ -5,6 +5,7 @@
 package Repository;
 
 import Model.Account;
+import Utilities.DBcontext;
 import Utilities.SQLServerConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -36,5 +37,17 @@ public class AccountRepository {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public boolean updatepass(String taikhoan) {
+        String sql="update nhanvien set matkhau = 12345678 where taikhoan=?";
+        int check=0;
+        try (Connection con=DBcontext.getConnection();PreparedStatement ps=con.prepareStatement(sql)){
+            ps.setString(1, taikhoan);
+            ps.executeUpdate();
+            check=ps.executeUpdate();
+        } catch (Exception e) {
+        }
+        return check>0;
     }
 }
